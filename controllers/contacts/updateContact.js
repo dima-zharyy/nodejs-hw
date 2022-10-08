@@ -1,18 +1,18 @@
 const { NotFound } = require('http-errors');
-const { contactSchema } = require('../../schemas');
-const contactsOperations = require('../../models/contacts');
+const { contactValidateSchema } = require('../../service');
+const contactService = require('../../service');
 
 const updateContact = async (req, res, next) => {
   try {
     const body = req.body;
-    const { error } = contactSchema.validate(body);
+    const { error } = contactValidateSchema.validate(body);
     if (error) {
       error.status = 400;
       throw error;
     }
 
     const contactId = req.params.contactId;
-    const result = await contactsOperations.updateContact(contactId, body);
+    const result = await contactService.updateContact(contactId, body);
 
     if (!result) {
       throw new NotFound(`Not found`);
