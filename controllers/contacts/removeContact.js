@@ -7,7 +7,7 @@ const removeContact = async (req, res, next) => {
     const result = await Contact.findByIdAndRemove({ _id: contactId });
 
     if (!result) {
-      throw new NotFound(`Not found`);
+      throw new NotFound('Not found');
     }
 
     res.json({
