@@ -1,4 +1,4 @@
-const { Unauthorized } = require('http-errors');
+const { Unauthorized, Forbidden } = require('http-errors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { SECRET_KEY } = process.env;
@@ -19,6 +19,10 @@ const signIn = async (req, res, next) => {
 
     if (!user || !comparePass) {
       throw new Unauthorized('Email or password is wrong');
+    }
+
+    if (!user.verify) {
+      throw new Forbidden('You need to verify your email');
     }
 
     const payload = { id: user._id };

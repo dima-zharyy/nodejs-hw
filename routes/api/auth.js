@@ -16,4 +16,8 @@ router.patch('/', auth, controller.setSubscription);
 
 router.patch('/avatars', auth, upload.single('avatar'), controller.setAvatar); // 'avatar' - field name in request body
 
+router.get('/verify/:verificationToken', controller.verifyEmail);
+
+router.post('/verify', controller.resendVerify);
+
 module.exports = router;
